@@ -4,12 +4,12 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
     width = 0
     height = 0
     budget = 0
-    cells = []
+    cells: list[list[pm.CellType]] = []
     bonuses = {}
     portals = {}
 
     def set_cell(x: int, y: int, cell_type: pm.CellType):
-        cells[y * width + x] = cell_type
+        cells[y][x] = cell_type
 
     for line in lines:
         words = line.split()
@@ -17,7 +17,7 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
             case ["grid", w, h]:
                 width = int(w)
                 height = int(h)
-                cells = [pm.CellType.GRASS] * (width * height)
+                cells = [[pm.CellType.GRASS for _ in range(width)] for _ in range(height)]
             case ["budget", b]:
                 budget = int(b)
             case ["horse", x, y]:

@@ -18,12 +18,12 @@ class Puzzle:
     width: int
     height: int
     budget: int
-    cells: list[CellType]
+    cells: list[list[CellType]]
     bonuses: dict[Vector2i, int]
     portals: dict[Vector2i, Vector2i]
 
     def get_cell(self, x: int, y: int) -> CellType:
-        return self.cells[y * self.width + x]
+        return self.cells[y][x]
 
     def get_cell_vec(self, pos: Vector2i) -> CellType:
         return self.get_cell(pos.x, pos.y)
