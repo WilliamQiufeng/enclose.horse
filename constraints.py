@@ -54,7 +54,8 @@ def build(puzzle: pm.Puzzle) -> Constraints:
                     if cell == pm.CellType.PORTAL:
                         portal_exit = puzzle.portals[pm.Vector2i(x, y)]
                         neighbor_reachable.append(reachable[portal_exit.y][portal_exit.x])
-                    constraints.append(Implies(And(walls[y][x] == False, Or(neighbor_reachable)), reachable[y][x] == True))
+                    constraints.append(reachable[y][x] == And(walls[y][x] == False, Or(neighbor_reachable)))
+                    
 
     # The horse must not be able to reach the boundaries of the grid (enclosure condition)
     for y in range(puzzle.height):
