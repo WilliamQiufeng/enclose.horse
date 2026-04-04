@@ -8,12 +8,12 @@ class CellType(Enum):
     PORTAL = auto()
     BONUS = auto()
 
-@dataclass
+@dataclass(frozen=True)
 class Vector2i:
     x: int
     y: int
 
-@dataclass
+@dataclass(frozen=True)
 class Puzzle:
     width: int
     height: int
@@ -21,6 +21,7 @@ class Puzzle:
     cells: list[list[CellType]]
     bonuses: dict[Vector2i, int]
     portals: dict[Vector2i, Vector2i]
+    horse: Vector2i
 
     def get_cell(self, x: int, y: int) -> CellType:
         return self.cells[y][x]
@@ -28,7 +29,8 @@ class Puzzle:
     def get_cell_vec(self, pos: Vector2i) -> CellType:
         return self.get_cell(pos.x, pos.y)
 
-@dataclass
+@dataclass(frozen=True)
 class PuzzleSolution:
     puzzle: Puzzle
     walls: list[Vector2i]
+    score: int

@@ -4,6 +4,7 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
     width = 0
     height = 0
     budget = 0
+    horse = pm.Vector2i(0, 0)
     cells: list[list[pm.CellType]] = []
     bonuses = {}
     portals = {}
@@ -22,6 +23,7 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
                 budget = int(b)
             case ["horse", x, y]:
                 set_cell(int(x), int(y), pm.CellType.HORSE)
+                horse = pm.Vector2i(int(x), int(y))
             case ["water", x, y]:
                 set_cell(int(x), int(y), pm.CellType.WATER)
             case ["portal", x1, y1, x2, y2]:
@@ -32,4 +34,4 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
             case ["bonus", x, y, b]:
                 set_cell(int(x), int(y), pm.CellType.BONUS)
                 bonuses[pm.Vector2i(int(x), int(y))] = int(b)
-    return pm.Puzzle(width, height, budget, cells, bonuses, portals)
+    return pm.Puzzle(width=width, height=height, budget=budget, cells=cells, bonuses=bonuses, portals=portals, horse=horse)

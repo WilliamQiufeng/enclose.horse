@@ -1,5 +1,5 @@
 grid 4 4
 horse 1 1
-budget 3
+budget 4
 water 1 2
 water 2 2
