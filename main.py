@@ -16,7 +16,7 @@ if __name__ == "__main__":
         print(f"Error: {args.input_file} is not a file.")
         sys.exit(1)
     with open(args.input_file, "r") as f:
-        lines = f.readlines()
+        lines = list(map(str.rstrip, f.readlines()))
     puzzle = from_lines(lines)
     print(ar.repr_puzzle(puzzle))
     constraints = c.build(puzzle)
