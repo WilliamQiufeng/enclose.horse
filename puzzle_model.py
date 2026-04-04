@@ -21,7 +21,6 @@ class Puzzle:
     cells: list[list[CellType]]
     bonuses: dict[Vector2i, int]
     portals: dict[Vector2i, Vector2i]
-    horse: Vector2i
 
     def get_cell(self, x: int, y: int) -> CellType:
         return self.cells[y][x]

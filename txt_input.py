@@ -4,14 +4,12 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class AsciiParseResult:
     cells: list[list[pm.CellType]]
-    horse: pm.Vector2i
     special_chars: dict[str, list[pm.Vector2i]]
     remaining_lines: list[str]
 
 def read_ascii(lines: list[str], height: int) -> AsciiParseResult:
     # read height amount of lines, returning result of parsing
     cells: list[list[pm.CellType]] = []
-    horse = pm.Vector2i(0, 0)
     special_chars: dict[str, list[pm.Vector2i]] = {}
     for y in range(height):
         line = lines[y].rstrip('\n')
@@ -24,7 +22,6 @@ def read_ascii(lines: list[str], height: int) -> AsciiParseResult:
                     row.append(pm.CellType.WATER)
                 case 'H':
                     row.append(pm.CellType.HORSE)
-                    horse = pm.Vector2i(x, y)
                 case c:
                     # c is a bonus character, we can have multiple bonuses with the same character, so we store them in a list
                     row.append(pm.CellType.BONUS)
@@ -32,7 +29,7 @@ def read_ascii(lines: list[str], height: int) -> AsciiParseResult:
                         special_chars[c] = []
                     special_chars[c].append(pm.Vector2i(x, y))
         cells.append(row)
-    return AsciiParseResult(cells=cells, horse=horse, special_chars=special_chars, remaining_lines=lines[height:])
+    return AsciiParseResult(cells=cells, special_chars=special_chars, remaining_lines=lines[height:])
 
 def from_lines(lines: list[str]) -> pm.Puzzle:
     remaining_lines = lines
@@ -40,7 +37,6 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
     width = 0
     height = 0
     budget = 0
-    horse = pm.Vector2i(0, 0)
     cells: list[list[pm.CellType]] = []
     bonuses = {}
     bonus_positions: dict[str, list[pm.Vector2i]] = {}
@@ -54,7 +50,6 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
             case ["map", *rest]:
                 ascii_result = read_ascii(rest, height)
                 cells = ascii_result.cells
-                horse = ascii_result.horse
                 bonus_positions = ascii_result.special_chars
                 remaining_lines = ascii_result.remaining_lines
             case [line, *rest]:
@@ -85,4 +80,4 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
                     case _:
                         raise ValueError(f"Unknown directive {line}")
                 remaining_lines = rest
-    return pm.Puzzle(width=width, height=height, budget=budget, cells=cells, bonuses=bonuses, portals=portals, horse=horse)
+    return pm.Puzzle(width=width, height=height, budget=budget, cells=cells, bonuses=bonuses, portals=portals)

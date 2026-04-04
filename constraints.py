@@ -30,16 +30,17 @@ def build(puzzle: pm.Puzzle) -> Constraints:
             if puzzle.get_cell(x, y) != pm.CellType.GRASS:
                 constraints.append(walls[y][x] == False)
 
-    # The horse's starting position is reachable
-    constraints.append(reachable[puzzle.horse.y][puzzle.horse.x] == True)
     # A cell is reachable if it's not a wall or water, and at least one of its neighbors is reachable
     for y in range(puzzle.height):
         for x in range(puzzle.width):
-            if (y, x) != (puzzle.horse.y, puzzle.horse.x):
-                cell = puzzle.get_cell(x, y)
-                if cell == pm.CellType.WATER:
+            cell = puzzle.get_cell(x, y)
+            match cell:
+                case pm.CellType.HORSE:
+                    # The horse's starting position is reachable
+                    constraints.append(reachable[y][x] == True)
+                case pm.CellType.WATER:
                     constraints.append(reachable[y][x] == False)
-                else:
+                case _:
                     # Adjacent cells that are reachable
                     neighbor_reachable = []
                     if y > 0:
