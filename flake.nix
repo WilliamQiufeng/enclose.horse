@@ -8,11 +8,6 @@
       system = "x86_64-linux";
       config.allowUnfree = true;
     };
-    
-    libs = with pkgs; [
-      stdenv.cc.cc.lib
-      z3
-    ];
   in
   {
     devShells.x86_64-linux.default = pkgs.mkShell {
@@ -24,7 +19,7 @@
 
       # This tells nix-ld where to find the libraries ONLY for this project
       shellHook = ''
-        export NIX_LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath libs}:$NIX_LD_LIBRARY_PATH
+        python --version
       '';
     };
   };
