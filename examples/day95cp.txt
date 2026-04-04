@@ -1,21 +1,21 @@
 grid 16 15
 budget 9
 map
-XXX....XXXX.XXXX
-XX..XX.......XXX
-XX..XXX.XXX..XXX
-X...XXX...X...C.
-..C.........X...
-.....XXX.XX.XXXX
-X.XX.XXXXXX.XXXX
-X.CX.XX#X@X.CXXX
-X.XX.XCHXHX.XXX.
-..XX.XX.X.X.XX..
-......XXXXX.X..X
-X...X.XX.X......
-XXX@.....X.C.#XX
-XXXXX........XXX
-XXXXXXXX..XXXXXX
+~~~....~~~~.~~~~
+~~..~~.......~~~
+~~..~~~.~~~..~~~
+~...~~~...~...C.
+..C.........~...
+.....~~~.~~.~~~~
+~.~~.~~~~~~.~~~~
+~.C~.~~#~@~.C~~~
+~.~~.~CH~H~.~~~.
+..~~.~~.~.~.~~..
+......~~~~~.~..~
+~...~.~~.~......
+~~~@.....~.C.#~~
+~~~~~........~~~
+~~~~~~~~..~~~~~~
 bonus C 3
 portal #
 portal @

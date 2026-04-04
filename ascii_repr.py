@@ -2,7 +2,7 @@ from puzzle_model import *
 
 cell_repr = {
     CellType.GRASS: '.',
-    CellType.WATER: 'X',
+    CellType.WATER: '~',
     CellType.HORSE: 'H',
     CellType.PORTAL: '@',
     CellType.BONUS: 'B'

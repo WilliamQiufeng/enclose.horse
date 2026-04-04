@@ -18,7 +18,7 @@ def read_ascii(lines: list[str], height: int) -> AsciiParseResult:
             match char:
                 case '.':
                     row.append(pm.CellType.GRASS)
-                case 'X':
+                case '~':
                     row.append(pm.CellType.WATER)
                 case 'H':
                     row.append(pm.CellType.HORSE)
