@@ -71,10 +71,14 @@ def build(puzzle: pm.Puzzle) -> Constraints:
     for y in range(puzzle.height):
         for x in range(puzzle.width):
             cell = puzzle.get_cell(x, y)
-            if cell == pm.CellType.BONUS:
-                score_terms.append(If(reachable[y][x], puzzle.bonuses[pm.Vector2i(x, y)] + 1, 0))
-            else:
-                score_terms.append(If(reachable[y][x], 1, 0))
+            match cell:
+                case pm.CellType.GRASS | pm.CellType.PORTAL | pm.CellType.HORSE:
+                    score_terms.append(If(reachable[y][x], 1, 0))
+                case pm.CellType.BONUS:
+                    score_terms.append(If(reachable[y][x], puzzle.bonuses[pm.Vector2i(x, y)] + 1, 0))
+            # Account for wall cost in score if applicable
+            if puzzle.wall_cost != 0:
+                score_terms.append(If(walls[y][x], -puzzle.wall_cost, 0))
 
     constraints.append(score == Sum(score_terms))
     return Constraints(walls=walls, score=score, constraints=constraints)

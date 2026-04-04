@@ -41,6 +41,7 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
     bonuses = {}
     bonus_positions: dict[str, list[pm.Vector2i]] = {}
     portals = {}
+    wall_cost = 0
 
     def set_cell(x: int, y: int, cell_type: pm.CellType):
         cells[y][x] = cell_type
@@ -61,6 +62,8 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
                         cells = [[pm.CellType.GRASS for _ in range(width)] for _ in range(height)]
                     case ["budget", b]:
                         budget = int(b)
+                    case ["wall", "cost", c]:
+                        wall_cost = int(c)
                     case ["portal", c]:
                         if c not in bonus_positions:
                             raise ValueError(f"Portal character {c} not found in map.")
@@ -80,4 +83,4 @@ def from_lines(lines: list[str]) -> pm.Puzzle:
                     case _:
                         raise ValueError(f"Unknown directive {line}")
                 remaining_lines = rest
-    return pm.Puzzle(width=width, height=height, budget=budget, cells=cells, bonuses=bonuses, portals=portals)
+    return pm.Puzzle(width=width, height=height, budget=budget, wall_cost=wall_cost, cells=cells, bonuses=bonuses, portals=portals)

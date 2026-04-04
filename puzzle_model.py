@@ -18,6 +18,7 @@ class Puzzle:
     width: int
     height: int
     budget: int
+    wall_cost: int
     cells: list[list[CellType]]
     bonuses: dict[Vector2i, int]
     portals: dict[Vector2i, Vector2i]
