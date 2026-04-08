@@ -39,6 +39,7 @@ def solve_for(puzzle: pm.Puzzle, minimum_score: int) -> pm.PuzzleSolution | None
                 neighbor_cell = puzzle.get_cell_vec(neighbor)
                 if neighbor_cell == pm.CellType.WATER:
                     continue
+                # Add edge in connectivity graph
                 add_edge(pm.Vector2i(x, y), neighbor)
                 terms.append(reachable[neighbor.y, neighbor.x])
             
@@ -47,6 +48,7 @@ def solve_for(puzzle: pm.Puzzle, minimum_score: int) -> pm.PuzzleSolution | None
                 add_edge(pm.Vector2i(x, y), portal_exit)
                 terms.append(reachable[portal_exit.y, portal_exit.x])
             
+            # A cell is reachable if it is not a wall and at least one of its neighbors is reachable
             solver.ensure(~(cp.fold_or(terms) & ~walls[y, x]) | reachable[y, x])
 
     for y in range(puzzle.height):
