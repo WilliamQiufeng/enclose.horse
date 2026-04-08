@@ -4,7 +4,7 @@ from pathlib import Path
 from txt_input import from_lines
 import ascii_repr as ar
 
-import z3backend
+import z3backend, cspuz_backend
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     puzzle = from_lines(lines)
     print(ar.repr_puzzle(puzzle))
     
-    solution = z3backend.solve(puzzle)
+    solution = cspuz_backend.solve(puzzle)
 
     if solution is not None:
         print("Solution found:")
