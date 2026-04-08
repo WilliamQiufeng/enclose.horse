@@ -1,0 +1,13 @@
+grid 12 8
+budget 3
+map
+~~~~~~~~~~~~
+~CC.BBBBB.H.
+~CC~BBBBB~~~
+~CC~BBBBB~~~
+~CC~BBBBB~~~
+~CC~BBBBB~~~
+~CC~BBBBB~~~
+~~~~~~~~~~~~
+bonus C 3
+bonus B -5
