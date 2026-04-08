@@ -3,9 +3,8 @@ import sys, os, io
 from pathlib import Path
 from txt_input import from_lines
 import ascii_repr as ar
-import constraints as c
 
-from z3 import *
+import z3backend
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -19,14 +18,11 @@ if __name__ == "__main__":
         lines = list(map(str.rstrip, f.readlines()))
     puzzle = from_lines(lines)
     print(ar.repr_puzzle(puzzle))
-    constraints = c.build(puzzle)
-    s = Optimize()
-    s.add(constraints.constraints)
-    s.maximize(constraints.score)
-    if s.check() == sat:
+    
+    solution = z3backend.solve(puzzle)
+
+    if solution is not None:
         print("Solution found:")
-        m = s.model()
-        solution = c.model_to_solution(puzzle, m)
         print(ar.repr_solution(solution))
         print("Score:", solution.score)
     else:

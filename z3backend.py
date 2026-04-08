@@ -1,5 +1,5 @@
 import puzzle_model as pm
-from z3 import Int, Bool, Optimize, If, Sum, PbLe, Implies, And, Or, BoolRef, ArithRef
+from z3 import Int, Bool, Optimize, If, Sum, PbLe, Implies, And, Or, BoolRef, ArithRef, sat
 from dataclasses import dataclass
 
 @dataclass
@@ -91,3 +91,15 @@ def model_to_solution(puzzle: pm.Puzzle, model) -> pm.PuzzleSolution:
             if model.evaluate(Bool(f"wall_{y}_{x}")):
                 walls.append(pm.Vector2i(x, y))
     return pm.PuzzleSolution(puzzle=puzzle, walls=walls, score=score)
+
+def solve(puzzle: pm.Puzzle) -> pm.PuzzleSolution | None:
+    constraints = build(puzzle)
+    s = Optimize()
+    s.add(constraints.constraints)
+    s.maximize(constraints.score)
+    if s.check() == sat:
+        m = s.model()
+        solution = model_to_solution(puzzle, m)
+        return solution
+    else:
+        return None
